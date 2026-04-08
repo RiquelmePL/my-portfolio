@@ -23,14 +23,13 @@ const Hero = () => {
 
   return (
     <section style={{ 
-      backgroundColor: '#0a0a0a', 
-      height: '100vh', 
+      backgroundColor: '#121212', 
+      minHeight: '100vh', 
       display: 'flex', 
       alignItems: 'center',
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
     }}>
-      {/* Fundo com grade tecnológica */}
       <div style={{
         position: 'absolute',
         width: '100%',
@@ -43,30 +42,6 @@ const Hero = () => {
         animation: 'moveGrid 20s linear infinite'
       }} />
 
-      {/* Círculos pulsantes tecnológicos */}
-      <div style={{
-        position: 'absolute',
-        top: '20%',
-        left: '10%',
-        width: '300px',
-        height: '300px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(0, 188, 212, 0.1) 0%, transparent 70%)',
-        animation: 'pulseCircle 4s ease-in-out infinite'
-      }} />
-
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        right: '5%',
-        width: '400px',
-        height: '400px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(25, 118, 210, 0.08) 0%, transparent 70%)',
-        animation: 'pulseCircle 5s ease-in-out infinite reverse'
-      }} />
-
-      {/* Partículas flutuantes */}
       {[...Array(30)].map((_, i) => (
         <div
           key={i}
@@ -85,35 +60,34 @@ const Hero = () => {
         />
       ))}
 
-      {/* Linhas de código animadas */}
       <div style={{
         position: 'absolute',
         bottom: '20px',
-        left: '20px',
+        right: '20px',
         fontFamily: 'monospace',
         fontSize: '12px',
         color: '#00bcd4',
         opacity: 0.5,
         animation: 'fadeCode 3s ease-in-out infinite'
       }}>
-        {`<Developer>`}
+        {`</Developer>`}
       </div>
+
       <div style={{
         position: 'absolute',
-        top: '20px',
-        right: '20px',
+        bottom: '20px',
+        left: '20px',
         fontFamily: 'monospace',
         fontSize: '12px',
         color: '#4caf50',
         opacity: 0.5,
         animation: 'fadeCode 3s ease-in-out infinite reverse'
       }}>
-        {`</FullStack>`}
+        {`<FullStack>`}
       </div>
 
-      <Container maxWidth="lg" style={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth="lg" style={{ position: 'relative', zIndex: 1}}>
         <Grid container spacing={8} alignItems="center">
-          {/* Bloco da Foto - 4 colunas */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Box style={{
               display: 'flex',
@@ -140,7 +114,6 @@ const Hero = () => {
                   src={avatar} 
                   alt="Avatar"
                 />
-                {/* Anel giratório ao redor da foto */}
                 <div style={{
                   position: 'absolute',
                   top: '-10px',
@@ -157,122 +130,124 @@ const Hero = () => {
             </Box>
           </Grid>
 
-        {/* Bloco do Texto e Botões - 8 colunas */}
-        <Grid size={{ xs: 12, md: 8 }}>
-        <Box style={{
-            padding: '20px 40px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '32px',
-            textAlign: 'center'
-        }}>
-            <Box>
-            <Typography 
-                variant="h2" 
-                component="h1" 
-                style={{ 
-                color: 'white', 
-                fontSize: '4rem',
-                marginBottom: '16px',
-                textShadow: '0 0 20px rgba(0, 188, 212, 0.3)'
-                }}
-            >
-                Riquelme Prado
-            </Typography>
-            
-            <div style={{ position: 'relative' }}>
-                <Typography 
-                variant="h4" 
-                component="p" 
-                style={{ 
-                    color: '#00bcd4', 
-                    fontSize: '2rem',
-                    minHeight: '90px',
-                    fontWeight: '500',
-                    textShadow: '0 0 10px rgba(0, 188, 212, 0.5)'
-                }}
-                >
-                {text}
-                <span style={{
-                    display: 'inline-block',
-                    width: '3px',
-                    height: '1.2em',
-                    backgroundColor: '#00bcd4',
-                    marginLeft: '4px',
-                    animation: 'blink 1s step-end infinite',
-                    boxShadow: '0 0 5px #00bcd4'
-                }} />
-                </Typography>
-            </div>
-            </Box>
-            
-            <Box style={{ 
-            display: 'flex', 
-            gap: '24px', 
-            flexWrap: 'wrap',
-            marginTop: '16px',
-            justifyContent: 'center'
+          <Grid size={{ xs: 12, md: 8 }}>
+            <Box style={{
+              padding: '20px 40px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '32px',
+              textAlign: 'center'
             }}>
-            <Button 
-                variant="outlined" 
-                startIcon={<Download />}
-                size="large"
-                style={{ 
-                color: '#00bcd4',
-                borderColor: '#00bcd4',
-                borderWidth: '2px',
-                padding: '14px 36px',
-                fontSize: '1.1rem',
-                backgroundColor: 'transparent',
-                transition: 'all 0.3s ease',
-                textTransform: 'none',
-                position: 'relative',
-                overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px)'
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 188, 212, 0.4)'
-                e.currentTarget.style.backgroundColor = 'rgba(0, 188, 212, 0.1)'
-                }}
-                onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'none'
-                e.currentTarget.style.backgroundColor = 'transparent'
-                }}
-            >
-                Baixar Currículo
-            </Button>
-            
-            <Button 
-                variant="outlined" 
-                startIcon={<ContactMail />}
-                size="large"
-                style={{ 
-                color: '#00bcd4',
-                borderColor: '#00bcd4',
-                borderWidth: '2px',
-                padding: '14px 36px',
-                fontSize: '1.1rem',
-                backgroundColor: 'transparent',
-                transition: 'all 0.3s ease',
-                textTransform: 'none'
-                }}
-                onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px)'
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 188, 212, 0.4)'
-                e.currentTarget.style.backgroundColor = 'rgba(0, 188, 212, 0.1)'
-                }}
-                onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'none'
-                e.currentTarget.style.backgroundColor = 'transparent'
-                }}
-            >
-                Me Contactar
-            </Button>
+              <Box>
+                <Typography 
+                  variant="h2" 
+                  component="h1" 
+                  style={{ 
+                    color: 'white', 
+                    fontSize: '4.2rem',
+                    fontWeight: '500',
+                    marginBottom: '16px',
+                    textShadow: '0 0 20px rgba(0, 188, 212, 0.3)',
+                    fontFamily: '"Helvetica Neue"'
+                  }}
+                >
+                  Riquelme Prado
+                </Typography>
+                
+                <div style={{ position: 'relative' }}>
+                  <Typography 
+                    variant="h4" 
+                    component="p" 
+                    style={{ 
+                      color: '#00bcd4', 
+                      fontSize: '2.2rem',
+                      minHeight: '90px',
+                      fontWeight: '400',
+                      textShadow: '0 0 10px rgba(0, 188, 212, 0.5)',
+                      fontFamily: '"Helvetica Neue"'
+                    }}
+                  >
+                    {text}
+                    <span style={{
+                      display: 'inline-block',
+                      width: '3px',
+                      height: '1.2em',
+                      backgroundColor: '#00bcd4',
+                      marginLeft: '4px',
+                      animation: 'blink 1s step-end infinite',
+                      boxShadow: '0 0 5px #00bcd4'
+                    }} />
+                  </Typography>
+                </div>
+              </Box>
+              
+              <Box style={{ 
+                display: 'flex', 
+                gap: '24px', 
+                flexWrap: 'wrap',
+                marginTop: '6px',
+                justifyContent: 'center'
+              }}>
+                <Button 
+                  variant="outlined" 
+                  startIcon={<Download />}
+                  size="large"
+                  style={{ 
+                    color: '#00bcd4',
+                    borderColor: '#00bcd4',
+                    borderWidth: '2px',
+                    padding: '14px 36px',
+                    fontSize: '1.1rem',
+                    backgroundColor: 'transparent',
+                    transition: 'all 0.3s ease',
+                    textTransform: 'none',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)'
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 188, 212, 0.4)'
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 188, 212, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = 'none'
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                >
+                  Baixar Currículo
+                </Button>
+                
+                <Button 
+                  variant="outlined" 
+                  startIcon={<ContactMail />}
+                  size="large"
+                  style={{ 
+                    color: '#00bcd4',
+                    borderColor: '#00bcd4',
+                    borderWidth: '2px',
+                    padding: '14px 36px',
+                    fontSize: '1.1rem',
+                    backgroundColor: 'transparent',
+                    transition: 'all 0.3s ease',
+                    textTransform: 'none'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)'
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 188, 212, 0.4)'
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 188, 212, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = 'none'
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                >
+                  Me Contactar
+                </Button>
+              </Box>
             </Box>
-        </Box>
-        </Grid>
+          </Grid>
         </Grid>
       </Container>
 
@@ -283,17 +258,6 @@ const Hero = () => {
           }
           100% {
             transform: translate(50px, 50px);
-          }
-        }
-        
-        @keyframes pulseCircle {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.3;
-          }
-          50% {
-            transform: scale(1.2);
-            opacity: 0.6;
           }
         }
         

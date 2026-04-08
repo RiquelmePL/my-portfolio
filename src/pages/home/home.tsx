@@ -5,9 +5,15 @@ import Projects from './projects/projects'
 const Home = () => {
   return (
     <>
-      <Hero />
-      <About />
-      <Projects />
+      <section id="sobre">
+        <Hero />
+      </section>
+      <section id="habilidades">
+        <About />
+      </section>
+      <section id="projetos">
+        <Projects />
+      </section>
     </>
   )
 }
