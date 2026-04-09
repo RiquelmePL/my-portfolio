@@ -5,6 +5,7 @@ import avatar from '../../../assets/avatar.png'
 
 const Hero = () => {
   const [text, setText] = useState('')
+  const [showParticles, setShowParticles] = useState(false)
   const fullText = 'Eu sou um Desenvolvedor FullStack'
   
   useEffect(() => {
@@ -15,6 +16,7 @@ const Hero = () => {
         i++
       } else {
         clearInterval(interval)
+        setShowParticles(true)
       }
     }, 100)
     
@@ -23,7 +25,7 @@ const Hero = () => {
 
   return (
     <section style={{ 
-      backgroundColor: '#121212', 
+      backgroundColor: '#0d0d1d', 
       minHeight: '100vh', 
       display: 'flex', 
       alignItems: 'center',
@@ -42,20 +44,21 @@ const Hero = () => {
         animation: 'moveGrid 20s linear infinite'
       }} />
 
-      {[...Array(30)].map((_, i) => (
+      {showParticles && [...Array(60)].map((_, i) => (
         <div
           key={i}
           style={{
             position: 'absolute',
-            width: `${Math.random() * 3}px`,
-            height: `${Math.random() * 3}px`,
-            background: `hsl(${Math.random() * 60 + 180}, 100%, 50%)`,
+            width: `${Math.random() * 4 + 2}px`,
+            height: `${Math.random() * 4 + 2}px`,
+            background: `radial-gradient(circle, ${['#00bcd4', '#4caf50', '#2196f3', '#ff9800', '#e91e63'][Math.floor(Math.random() * 5)]}, transparent)`,
             borderRadius: '50%',
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
-            animation: `float ${5 + Math.random() * 10}s linear infinite`,
-            opacity: 0.3 + Math.random() * 0.5,
-            boxShadow: '0 0 5px currentColor'
+            animation: `float ${5 + Math.random() * 8}s linear infinite`,
+            animationDelay: `${Math.random() * 5}s`,
+            opacity: 0,
+            boxShadow: `0 0 ${8 + Math.random() * 15}px ${['#00bcd4', '#4caf50', '#2196f3', '#ff9800', '#e91e63'][Math.floor(Math.random() * 5)]}`,
           }}
         />
       ))}
@@ -107,25 +110,15 @@ const Hero = () => {
                     height: 'auto',
                     borderRadius: '50%',
                     display: 'block',
-                    border: '2px solid rgba(0, 188, 212, 0.5)',
+                    border: '3px solid transparent',
+                    background: 'linear-gradient(white, white) padding-box, linear-gradient(135deg, #00bcd4, #1976d2, #4caf50) border-box',
                     boxShadow: '0 0 40px rgba(0, 188, 212, 0.3)',
-                    filter: 'brightness(0.95) contrast(1.05)'
+                    filter: 'brightness(0.95) contrast(1.05)',
+                    animation: 'borderPulse 2s ease-in-out infinite'
                   }} 
                   src={avatar} 
                   alt="Avatar"
                 />
-                <div style={{
-                  position: 'absolute',
-                  top: '-10px',
-                  left: '-10px',
-                  right: '-10px',
-                  bottom: '-10px',
-                  borderRadius: '50%',
-                  border: '2px solid transparent',
-                  borderTopColor: '#00bcd4',
-                  borderRightColor: '#1976d2',
-                  animation: 'spin 3s linear infinite'
-                }} />
               </div>
             </Box>
           </Grid>
@@ -267,14 +260,28 @@ const Hero = () => {
             opacity: 0;
           }
           10% {
-            opacity: 0.5;
+            opacity: 0.7;
+          }
+          50% {
+            opacity: 1;
           }
           90% {
-            opacity: 0.5;
+            opacity: 0.7;
           }
           100% {
             transform: translateY(-100vh) translateX(100px);
             opacity: 0;
+          }
+        }
+        
+        @keyframes borderPulse {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
+            filter: brightness(0.95) contrast(1.05);
+          }
+          50% {
+            box-shadow: 0 0 50px rgba(0, 188, 212, 0.6);
+            filter: brightness(1) contrast(1.1);
           }
         }
         
@@ -284,15 +291,6 @@ const Hero = () => {
           }
           50% {
             opacity: 0.6;
-          }
-        }
-        
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
           }
         }
         
