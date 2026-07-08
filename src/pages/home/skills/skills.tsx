@@ -1,35 +1,76 @@
-import { Container, Grid, Typography, Box, Card, CardContent, Chip } from '@mui/material'
-import { 
-  Code, 
-  Storage, 
-  DesignServices, 
-  Build,
-  Cloud,
-  Security
-} from '@mui/icons-material'
+import { Container, Grid, Typography, Box, Card, CardContent } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
+import type { IconType } from 'react-icons'
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+  SiHtml5,
+  SiCss,
+  SiNestjs,
+  SiNodedotjs,
+  SiPython,
+  SiFastapi,
+  SiExpress,
+  SiPostgresql,
+  SiMysql,
+  SiGit,
+  SiGithub,
+  SiDocker,
+  SiRedis,
+  SiLinux,
+  SiSwagger
+} from 'react-icons/si'
+import { FaAws } from 'react-icons/fa'
+import { DiMsqlServer } from 'react-icons/di'
+import { BsKanban } from 'react-icons/bs'
+import {
+  TbDatabase,
+  TbApi,
+  TbInfinity,
+  TbUsersGroup,
+  TbMessageCircle,
+  TbBulb,
+  TbTrophy,
+  TbChartBar,
+  TbMap2,
+  TbSitemap
+} from 'react-icons/tb'
+
+interface SkillItem {
+  name: string;
+  icon: IconType;
+  color: string;
+}
+
+interface SkillCategory {
+  category: string;
+  icon: IconType;
+  iconColor: string;
+  items: SkillItem[];
+}
 
 const Skills = () => {
-  const [visibleCards, setVisibleCards] = useState([false, false, false, false, false, false])
-  const sectionRef = useRef(null)
-  const [hasAnimated, setHasAnimated] = useState(false)
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false, false, false, false])
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const [hasAnimated, setHasAnimated] = useState<boolean>(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries
         if (entry.isIntersecting && !hasAnimated) {
-          const timeouts = [0, 1, 2, 3, 4, 5].map((index, delay) => {
-            return setTimeout(() => {
+          skills.forEach((_, index) => {
+            setTimeout(() => {
               setVisibleCards(prev => {
                 const newVisible = [...prev]
                 newVisible[index] = true
                 return newVisible
               })
-            }, delay * 150)
+            }, index * 120)
           })
           setHasAnimated(true)
-          return () => timeouts.forEach(timeout => clearTimeout(timeout))
         }
       },
       { threshold: 0.2 }
@@ -46,163 +87,255 @@ const Skills = () => {
     }
   }, [hasAnimated])
 
-  const skills = [
+  const skills: SkillCategory[] = [
     {
       category: "Frontend",
-      icon: <DesignServices sx={{ fontSize: 32 }} />,
-      iconColor: '#00bcd4',
-      items: ["React", "React Native", "Next.js", "TypeScript", "HTML/CSS"]
+      icon: SiReact,
+      iconColor: '#0891b2',
+      items: [
+        { name: "React", icon: SiReact, color: '#61DAFB' },
+        { name: "React Native", icon: SiReact, color: '#61DAFB' },
+        { name: "Next.js", icon: SiNextdotjs, color: '#111111' },
+        { name: "TypeScript", icon: SiTypescript, color: '#3178C6' },
+        { name: "JavaScript", icon: SiJavascript, color: '#F0DB4F' },
+        { name: "HTML5", icon: SiHtml5, color: '#E34F26' },
+        { name: "CSS3", icon: SiCss, color: '#1572B6' }
+      ]
     },
     {
       category: "Backend",
-      icon: <Code sx={{ fontSize: 32 }} />,
-      iconColor: '#4caf50',
-      items: ["NestJS", "Node.js", "Python", "FastAPI", "Express"]
+      icon: SiNodedotjs,
+      iconColor: '#2e7d32',
+      items: [
+        { name: "Node.js", icon: SiNodedotjs, color: '#339933' },
+        { name: "NestJS", icon: SiNestjs, color: '#E0234E' },
+        { name: "Express", icon: SiExpress, color: '#111111' },
+        { name: "Python", icon: SiPython, color: '#3776AB' },
+        { name: "FastAPI", icon: SiFastapi, color: '#009688' },
+        { name: "RESTful APIs", icon: TbApi, color: '#0d9488' }
+      ]
     },
     {
       category: "Banco de Dados",
-      icon: <Storage sx={{ fontSize: 32 }} />,
-      iconColor: '#ff9800',
-      items: ["PostgreSQL", "MySQL", "MongoDB", "SQL"]
+      icon: TbDatabase,
+      iconColor: '#e65100',
+      items: [
+        { name: "PostgreSQL", icon: SiPostgresql, color: '#4169E1' },
+        { name: "PostGIS", icon: TbMap2, color: '#2E86AB' },
+        { name: "SQL Server", icon: DiMsqlServer, color: '#CC2927' },
+        { name: "MySQL", icon: SiMysql, color: '#4479A1' },
+        { name: "Oracle", icon: TbDatabase, color: '#F80000' }
+      ]
     },
     {
-      category: "Ferramentas",
-      icon: <Build sx={{ fontSize: 32 }} />,
-      iconColor: '#e91e63',
-      items: ["Git/GitHub", "Docker", "Power BI", "Metodologias Ágeis"]
+      category: "DevOps & Ferramentas",
+      icon: SiDocker,
+      iconColor: '#c2185b',
+      items: [
+        { name: "Git", icon: SiGit, color: '#F05032' },
+        { name: "GitHub", icon: SiGithub, color: '#181717' },
+        { name: "Docker", icon: SiDocker, color: '#2496ED' },
+        { name: "Redis", icon: SiRedis, color: '#DC382D' },
+        { name: "CI/CD", icon: TbInfinity, color: '#2088FF' },
+        { name: "Linux", icon: SiLinux, color: '#E8A33D' }
+      ]
     },
     {
-      category: "Cloud & DevOps",
-      icon: <Cloud sx={{ fontSize: 32 }} />,
-      iconColor: '#2196f3',
-      items: ["AWS (Conceitos)", "CI/CD", "API RESTful"]
+      category: "Cloud & Análise",
+      icon: FaAws,
+      iconColor: '#1565c0',
+      items: [
+        { name: "AWS", icon: FaAws, color: '#FF9900' },
+        { name: "Power BI", icon: TbChartBar, color: '#F2C811' },
+        { name: "Swagger/OpenAPI", icon: SiSwagger, color: '#85EA2D' },
+        { name: "Modelagem UML", icon: TbSitemap, color: '#546e7a' }
+      ]
     },
     {
-      category: "Soft Skills",
-      icon: <Security sx={{ fontSize: 32 }} />,
-      iconColor: '#9c27b0',
-      items: ["Liderança", "Comunicação", "Trabalho em Equipe", "Resolução de Problemas"]
+      category: "Metodologias & Soft Skills",
+      icon: TbUsersGroup,
+      iconColor: '#6a1b9a',
+      items: [
+        { name: "Scrum/Kanban", icon: BsKanban, color: '#7c3aed' },
+        { name: "Liderança", icon: TbTrophy, color: '#9c27b0' },
+        { name: "Comunicação", icon: TbMessageCircle, color: '#9c27b0' },
+        { name: "Trabalho em Equipe", icon: TbUsersGroup, color: '#9c27b0' },
+        { name: "Resolução de Problemas", icon: TbBulb, color: '#9c27b0' }
+      ]
     }
   ]
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      style={{ 
-        backgroundColor: '#f5f5f5', 
-        minHeight: '100vh', 
-        display: 'flex', 
+      style={{
+        backgroundColor: '#f7f7fa',
+        minHeight: '100vh',
+        display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        padding: '80px 0'
+        overflow: 'hidden',
+        padding: '96px 0'
       }}
     >
-      <Container maxWidth="lg">
-        <Box textAlign="center" mb={8}>
-          <Typography 
-            variant="h3" 
-            component="h2" 
-            sx={{ 
-              fontWeight: 'bold', 
+      {/* Blobs decorativos de fundo */}
+      <Box sx={{
+        position: 'absolute',
+        top: '-10%',
+        right: '-8%',
+        width: '420px',
+        height: '420px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(8,145,178,0.10) 0%, transparent 70%)',
+        filter: 'blur(20px)',
+        pointerEvents: 'none'
+      }} />
+      <Box sx={{
+        position: 'absolute',
+        bottom: '-12%',
+        left: '-6%',
+        width: '380px',
+        height: '380px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(156,39,176,0.09) 0%, transparent 70%)',
+        filter: 'blur(20px)',
+        pointerEvents: 'none'
+      }} />
+
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+        <Box textAlign="center" mb={7}>
+          <Typography
+            sx={{
+              display: 'inline-block',
+              color: '#0891b2',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              mb: 1.5,
+              px: 2,
+              py: 0.5,
+              borderRadius: '999px',
+              backgroundColor: 'rgba(8,145,178,0.08)'
+            }}
+          >
+            Stack &amp; Ferramentas
+          </Typography>
+          <Typography
+            variant="h3"
+            component="h2"
+            sx={{
+              fontWeight: 800,
               color: '#0d0d1d',
               fontSize: { xs: '2rem', md: '2.5rem' },
-              mb: 2
+              letterSpacing: '-0.02em',
+              mb: 1.5
             }}
           >
             Habilidades Técnicas
           </Typography>
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              color: '#666', 
-              maxWidth: '700px', 
-              mx: 'auto',
-              fontSize: { xs: '0.9rem', md: '1rem' },
-              fontWeight: 400,
-              mb: 2
-            }}
-          >
-            Tecnologias e ferramentas que utilizo no meu dia a dia
-          </Typography>
         </Box>
 
         <Grid container spacing={3}>
-          {skills.map((skillCategory, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-              <Box sx={{ 
-                opacity: visibleCards[index] ? 1 : 0,
-                transform: visibleCards[index] ? 'translateY(0)' : 'translateY(30px)',
-                transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`,
-                height: '100%'
-              }}>
-                <Card 
-                  sx={{ 
-                    height: '100%',
-                    minHeight: '240px',
-                    borderRadius: '16px',
-                    backgroundColor: 'white',
-                    border: '1px solid rgba(0, 0, 0, 0.08)',
-                    transition: 'all 0.3s ease',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      boxShadow: `0 8px 25px rgba(0, 0, 0, 0.1)`,
-                      borderColor: skillCategory.iconColor
-                    }
-                  }}
-                >
-                  <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', p: 2.5 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2.5 }}>
-                      <Box sx={{ 
-                        color: skillCategory.iconColor,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: `${skillCategory.iconColor}15`,
-                        borderRadius: '10px',
-                        p: 0.8
-                      }}>
-                        {skillCategory.icon}
+          {skills.map((skillCategory, index) => {
+            const CategoryIcon = skillCategory.icon
+            return (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+                <Box sx={{
+                  opacity: visibleCards[index] ? 1 : 0,
+                  transform: visibleCards[index] ? 'translateY(0)' : 'translateY(30px)',
+                  transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`,
+                  height: '100%'
+                }}>
+                  <Card
+                    sx={{
+                      position: 'relative',
+                      height: '100%',
+                      minHeight: '260px',
+                      borderRadius: '20px',
+                      backgroundColor: 'white',
+                      border: '1px solid rgba(15,23,42,0.06)',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      overflow: 'hidden',
+                      boxShadow: '0 2px 10px rgba(15,23,42,0.05)',
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: `0 16px 32px rgba(15,23,42,0.12)`
+                      }
+                    }}
+                  >
+                    {/* Barra de destaque no topo */}
+                    <Box sx={{
+                      height: '4px',
+                      width: '100%',
+                      background: `linear-gradient(90deg, ${skillCategory.iconColor}, ${skillCategory.iconColor}40)`
+                    }} />
+
+                    <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', p: 3 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.75, mb: 2.5 }}>
+                        <Box sx={{
+                          color: skillCategory.iconColor,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          background: `linear-gradient(135deg, ${skillCategory.iconColor}22, ${skillCategory.iconColor}0d)`,
+                          borderRadius: '14px',
+                          width: '48px',
+                          height: '48px',
+                          flexShrink: 0
+                        }}>
+                          <CategoryIcon size={24} />
+                        </Box>
+                        <Typography
+                          variant="h6"
+                          component="h3"
+                          sx={{ color: '#0d0d1d', fontSize: '1.1rem', fontWeight: 700 }}
+                        >
+                          {skillCategory.category}
+                        </Typography>
                       </Box>
-                      <Typography 
-                        variant="h6" 
-                        component="h3" 
-                        fontWeight="bold" 
-                        sx={{ color: '#0d0d1d', fontSize: '1.1rem' }}
-                      >
-                        {skillCategory.category}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, flex: 1 }}>
-                      {skillCategory.items.map((skill, idx) => (
-                        <Chip
-                          key={idx}
-                          label={skill}
-                          size="small"
-                          sx={{
-                            backgroundColor: '#f0f0f0',
-                            color: '#333',
-                            fontWeight: 500,
-                            fontSize: '0.75rem',
-                            height: '28px',
-                            borderRadius: '8px',
-                            '&:hover': {
-                              backgroundColor: skillCategory.iconColor,
-                              color: 'white',
-                              transform: 'translateY(-2px)',
-                              transition: 'all 0.3s ease'
-                            }
-                          }}
-                        />
-                      ))}
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Box>
-            </Grid>
-          ))}
+
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignContent: 'flex-start' }}>
+                        {skillCategory.items.map((skill, idx) => {
+                          const SkillIcon = skill.icon
+                          return (
+                            <Box
+                              key={idx}
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 0.75,
+                                backgroundColor: '#f8fafc',
+                                border: '1px solid rgba(15,23,42,0.07)',
+                                borderRadius: '10px',
+                                px: 1.25,
+                                py: 0.6,
+                                cursor: 'default',
+                                transition: 'all 0.25s ease',
+                                '&:hover': {
+                                  backgroundColor: `${skill.color}14`,
+                                  borderColor: `${skill.color}55`,
+                                  transform: 'translateY(-2px)',
+                                  boxShadow: `0 6px 14px ${skill.color}25`
+                                }
+                              }}
+                            >
+                              <SkillIcon size={15} color={skill.color} style={{ flexShrink: 0 }} />
+                              <Typography sx={{ fontSize: '0.78rem', fontWeight: 600, color: '#334155' }}>
+                                {skill.name}
+                              </Typography>
+                            </Box>
+                          )
+                        })}
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Box>
+              </Grid>
+            )
+          })}
         </Grid>
       </Container>
     </section>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { 
   AppBar, 
   Toolbar, 
@@ -25,14 +25,15 @@ import SchoolIcon from '@mui/icons-material/School'
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const appBarRef = useRef(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const menuItems = [
     { name: 'Início', icon: <HomeIcon />, id: 'hero' },
     { name: 'Sobre', icon: <SchoolIcon />, id: 'sobre' },
-    { name: 'Habilidades', icon: <CodeIcon />, id: 'habilidades' },
-    { name: 'Projetos', icon: <WorkIcon />, id: 'projetos' }
+    { name: 'Projetos', icon: <WorkIcon />, id: 'projetos' },
+    { name: 'Habilidades', icon: <CodeIcon />, id: 'habilidades' }
   ]
 
   useEffect(() => {
@@ -47,13 +48,15 @@ const NavBar = () => {
     setMobileOpen(!mobileOpen)
   }
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      const offset = 70
-      const elementPosition = element.offsetTop - offset
+      const currentHeight = appBarRef.current ? appBarRef.current.offsetHeight : 70
+      const elementPosition = element.offsetTop
+      const offsetPosition = elementPosition - currentHeight
+      
       window.scrollTo({
-        top: elementPosition,
+        top: offsetPosition,
         behavior: 'smooth'
       })
     }
@@ -123,6 +126,7 @@ const NavBar = () => {
   return (
     <>
       <AppBar 
+        ref={appBarRef}
         position="fixed" 
         sx={{ 
           backgroundColor: scrolled 

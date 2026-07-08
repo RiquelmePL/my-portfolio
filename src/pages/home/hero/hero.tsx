@@ -1,11 +1,14 @@
-import { Container, Grid, Typography, Button, Box } from '@mui/material'
-import { Download, ContactMail } from '@mui/icons-material'
+import { Container, Grid, Typography, Button, Box, Dialog, DialogContent, IconButton, Divider, Snackbar, Alert } from '@mui/material'
+import { Download, ContactMail, Close, Email, Phone, WhatsApp, ContentCopy, CheckCircle } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import avatar from '../../../assets/avatar.png'
 
 const Hero = () => {
   const [text, setText] = useState('')
   const [showParticles, setShowParticles] = useState(false)
+  const [contactDialogOpen, setContactDialogOpen] = useState(false)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [copiedInfo, setCopiedInfo] = useState('')
   const fullText = 'Eu sou um Desenvolvedor FullStack'
   
   useEffect(() => {
@@ -22,6 +25,48 @@ const Hero = () => {
     
     return () => clearInterval(interval)
   }, [])
+
+  // Função para download do currículo
+  const handleDownloadCV = () => {
+    const pdfUrl = 'Currículo_Riquelme_Prado_Leite (9).pdf'
+    const link = document.createElement('a')
+    link.href = pdfUrl
+    link.download = 'Currículo_DevFullStack_Riquelme_Prado00.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Função para abrir o modal de contato
+  const handleContact = () => {
+    setContactDialogOpen(true)
+  }
+
+  // Função para fechar o modal
+  const handleCloseDialog = () => {
+    setContactDialogOpen(false)
+  }
+
+  // Função para copiar texto
+  const copyToClipboard = (text: string, infoType: string) => {
+    navigator.clipboard.writeText(text)
+    setCopiedInfo(infoType)
+    setSnackbarOpen(true)
+  }
+
+  // Função para abrir WhatsApp
+  const openWhatsApp = () => {
+    const phoneNumber = "5579991645529" 
+    const message = "Olá! Vi seu portfólio e gostaria de conversar sobre oportunidades."
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank')
+  }
+
+  // Informações de contato
+  const contactInfo = {
+    email: "riquelmeprado.dev@gmail.com", 
+    phone: "(79) 98838-5750", 
+    whatsapp: "(79) 99164-5529" 
+  }
 
   return (
     <section style={{ 
@@ -185,6 +230,7 @@ const Hero = () => {
                   variant="outlined" 
                   startIcon={<Download />}
                   size="large"
+                  onClick={handleDownloadCV}
                   style={{ 
                     color: '#00bcd4',
                     borderColor: '#00bcd4',
@@ -215,6 +261,7 @@ const Hero = () => {
                   variant="outlined" 
                   startIcon={<ContactMail />}
                   size="large"
+                  onClick={handleContact}
                   style={{ 
                     color: '#00bcd4',
                     borderColor: '#00bcd4',
@@ -243,6 +290,247 @@ const Hero = () => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* Modal de Contato */}
+      <Dialog
+        open={contactDialogOpen}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: '#1a1a2e',
+            borderRadius: '24px',
+            border: '1px solid rgba(0, 188, 212, 0.3)',
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+            position: 'relative',
+            overflow: 'hidden'
+          }
+        }}
+      >
+        {/* Header com gradiente */}
+        <Box sx={{
+          background: 'linear-gradient(135deg, #00bcd4 0%, #1976d2 100%)',
+          padding: '32px',
+          textAlign: 'center',
+          position: 'relative'
+        }}>
+          <IconButton
+            onClick={handleCloseDialog}
+            sx={{
+              position: 'absolute',
+              top: 16,
+              right: 16,
+              color: 'white',
+              backgroundColor: 'rgba(0,0,0,0.2)',
+              '&:hover': {
+                backgroundColor: 'rgba(0,0,0,0.4)'
+              }
+            }}
+          >
+            <Close />
+          </IconButton>
+          
+          <ContactMail sx={{ fontSize: 60, color: 'white', mb: 2 }} />
+          <Typography variant="h4" sx={{ color: 'white', fontWeight: 'bold', mb: 1 }}>
+            Entre em Contato
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+            Escolha a melhor forma para conversarmos
+          </Typography>
+        </Box>
+
+        <DialogContent sx={{ p: 4 }}>
+          {/* Email */}
+          <Box sx={{ mb: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+              <Box sx={{
+                backgroundColor: 'rgba(255, 59, 48, 0.1)',
+                borderRadius: '12px',
+                padding: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Email sx={{ color: '#ff3b30', fontSize: 28 }} />
+              </Box>
+              <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+                Email
+              </Typography>
+            </Box>
+            <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#0d0d1d',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              <Typography variant="body1" sx={{ color: '#00bcd4', fontFamily: 'monospace' }}>
+                {contactInfo.email}
+              </Typography>
+              <IconButton
+                onClick={() => copyToClipboard(contactInfo.email, 'Email')}
+                sx={{
+                  color: '#00bcd4',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 188, 212, 0.1)'
+                  }
+                }}
+              >
+                <ContentCopy sx={{ fontSize: 20 }} />
+              </IconButton>
+            </Box>
+          </Box>
+
+          <Divider sx={{ my: 3, borderColor: 'rgba(255,255,255,0.1)' }} />
+
+          {/* Telefone */}
+          <Box sx={{ mb: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+              <Box sx={{
+                backgroundColor: 'rgba(52, 199, 89, 0.1)',
+                borderRadius: '12px',
+                padding: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Phone sx={{ color: '#34c759', fontSize: 28 }} />
+              </Box>
+              <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+                Telefone
+              </Typography>
+            </Box>
+            <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#0d0d1d',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              <Typography variant="body1" sx={{ color: '#00bcd4', fontFamily: 'monospace' }}>
+                {contactInfo.phone}
+              </Typography>
+              <IconButton
+                onClick={() => copyToClipboard(contactInfo.phone, 'Telefone')}
+                sx={{
+                  color: '#00bcd4',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 188, 212, 0.1)'
+                  }
+                }}
+              >
+                <ContentCopy sx={{ fontSize: 20 }} />
+              </IconButton>
+            </Box>
+          </Box>
+
+          <Divider sx={{ my: 3, borderColor: 'rgba(255,255,255,0.1)' }} />
+
+          {/* WhatsApp */}
+          <Box sx={{ mb: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+              <Box sx={{
+                backgroundColor: 'rgba(37, 211, 102, 0.1)',
+                borderRadius: '12px',
+                padding: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <WhatsApp sx={{ color: '#25D366', fontSize: 28 }} />
+              </Box>
+              <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+                WhatsApp
+              </Typography>
+            </Box>
+            <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#0d0d1d',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.1)',
+              mb: 2
+            }}>
+              <Typography variant="body1" sx={{ color: '#00bcd4', fontFamily: 'monospace' }}>
+                {contactInfo.whatsapp}
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <IconButton
+                  onClick={() => copyToClipboard(contactInfo.whatsapp, 'WhatsApp')}
+                  sx={{
+                    color: '#00bcd4',
+                    '&:hover': {
+                      backgroundColor: 'rgba(0, 188, 212, 0.1)'
+                    }
+                  }}
+                >
+                  <ContentCopy sx={{ fontSize: 20 }} />
+                </IconButton>
+                <Button
+                  variant="contained"
+                  startIcon={<WhatsApp />}
+                  onClick={openWhatsApp}
+                  sx={{
+                    backgroundColor: '#25D366',
+                    '&:hover': {
+                      backgroundColor: '#128C7E',
+                      transform: 'translateY(-2px)'
+                    },
+                    textTransform: 'none',
+                    borderRadius: '8px'
+                  }}
+                >
+                  Enviar Mensagem
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Informação adicional */}
+          <Box sx={{
+            mt: 4,
+            p: 2,
+            backgroundColor: 'rgba(0, 188, 212, 0.05)',
+            borderRadius: '12px',
+            textAlign: 'center',
+            border: '1px solid rgba(0, 188, 212, 0.2)'
+          }}>
+            <Typography variant="body2" sx={{ color: '#aaa' }}>
+              💡 Dica: Clique no ícone de cópia para copiar as informações rapidamente
+            </Typography>
+          </Box>
+        </DialogContent>
+      </Dialog>
+
+      {/* Snackbar de feedback */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="success"
+          icon={<CheckCircle />}
+          sx={{
+            backgroundColor: '#1a1a2e',
+            color: '#00bcd4',
+            '& .MuiAlert-icon': {
+              color: '#00bcd4'
+            }
+          }}
+        >
+          {copiedInfo} copiado com sucesso!
+        </Alert>
+      </Snackbar>
 
       <style>{`
         @keyframes moveGrid {
