@@ -203,7 +203,7 @@ const Skills = () => {
       }} />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        <Box textAlign="center" mb={7}>
+        <Box sx={{ textAlign: 'center', mb: 7 }}>
           <Typography
             sx={{
               display: 'inline-block',

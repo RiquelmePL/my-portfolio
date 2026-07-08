@@ -85,7 +85,7 @@ const About = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Box textAlign="center" mb={12}>
+        <Box sx={{ textAlign: 'center', mb: 12 }}>
           <Typography 
             variant="h2" 
             component="h2" 
@@ -101,7 +101,7 @@ const About = () => {
         </Box>
 
         {/* Texto Principal - Ocupa toda largura */}
-        <Box textAlign="center" mb={8}>
+        <Box sx={{ textAlign: 'center', mb: 8 }}>
           <Box sx={{ maxWidth: '1000px', mx: 'auto' }}>
             <Typography 
               variant="body1" 
@@ -139,7 +139,7 @@ const About = () => {
         </Box>
 
         {/* Cards de Informações - Abaixo do texto com animação */}
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
           {cards.map((card, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
               <Box sx={{ 

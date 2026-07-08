@@ -135,7 +135,7 @@ const Hero = () => {
       </div>
 
       <Container maxWidth="lg" style={{ position: 'relative', zIndex: 1}}>
-        <Grid container spacing={8} alignItems="center">
+        <Grid container spacing={8} sx={{ alignItems: 'center' }}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Box style={{
               display: 'flex',
@@ -297,7 +297,8 @@ const Hero = () => {
         onClose={handleCloseDialog}
         maxWidth="sm"
         fullWidth
-        PaperProps={{
+        slotProps={{
+        paper: {
           sx: {
             backgroundColor: '#1a1a2e',
             borderRadius: '24px',
@@ -306,7 +307,8 @@ const Hero = () => {
             position: 'relative',
             overflow: 'hidden'
           }
-        }}
+        }
+      }}
       >
         {/* Header com gradiente */}
         <Box sx={{

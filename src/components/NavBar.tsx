@@ -48,10 +48,10 @@ const NavBar = () => {
     setMobileOpen(!mobileOpen)
   }
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      const currentHeight = appBarRef.current ? appBarRef.current.offsetHeight : 70
+      const currentHeight = appBarRef.current ? (appBarRef.current as HTMLElement).offsetHeight : 70
       const elementPosition = element.offsetTop
       const offsetPosition = elementPosition - currentHeight
       

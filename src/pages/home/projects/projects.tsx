@@ -549,13 +549,15 @@ const Projects: React.FC = () => {
         maxWidth="md"
         fullWidth
         fullScreen={fullScreen}
-        PaperProps={{
-          sx: {
-            backgroundColor: '#0f0f23',
-            borderRadius: fullScreen ? 0 : '24px',
-            overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 32px 64px rgba(0,0,0,0.7)'
+        slotProps={{
+          paper: {
+            sx: {
+              backgroundColor: '#0f0f23',
+              borderRadius: fullScreen ? 0 : '24px',
+              overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 32px 64px rgba(0,0,0,0.7)'
+            }
           }
         }}
       >
@@ -774,15 +776,19 @@ const Projects: React.FC = () => {
         open={imageDialogOpen}
         onClose={handleCloseImageDialog}
         fullScreen
-        TransitionComponent={FullScreenTransition}
-        PaperProps={{
-          sx: {
-            backgroundColor: 'rgba(0, 0, 0, 0.95)',
-            backdropFilter: 'blur(20px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'relative'
+        slots={{
+          transition: FullScreenTransition
+        }}
+        slotProps={{
+          paper: {
+            sx: {
+              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+              backdropFilter: 'blur(20px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative'
+            }
           }
         }}
       >
